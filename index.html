@@ -1,0 +1,733 @@
+<!doctype html>
+<html lang="ca">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tracte Digne: defensem el resident</title>
+<meta name="theme-color" content="#1F4FD8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#14213D; --ink-2:#4A5672; --paper:#FBFBFA; --surface:#FFFFFF; --mist:#E9EFFC; --line:#D9DFEA;
+  --blue:#1F4FD8; --blue-ink:#FFFFFF; --blue-deep:#163A9E;
+  --red:#C8322B; --red-soft:#FBE9E7; --green:#1E8A4C; --green-soft:#E3F4EA; --amber:#9A6412; --amber-soft:#FCF1DC;
+  --radius-s:6px; --radius-m:12px; --radius-l:22px;
+  --font:"Atkinson Hyperlegible", "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --ink:#EEF2FA; --ink-2:#A9B4CC; --paper:#0E1525; --surface:#162038; --mist:#1C2B4D; --line:#2A3758;
+    --blue:#6E95FF; --blue-ink:#0E1525; --blue-deep:#9CB6FF;
+    --red:#FF8A80; --red-soft:#3A1C1F; --green:#6FD39A; --green-soft:#15342A; --amber:#F2C066; --amber-soft:#3A2E14;
+    color-scheme:dark;
+  }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font);font-size:18px;line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:var(--blue)}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px;border-radius:4px}
+button,input,select,textarea{font:inherit;color:inherit}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:52px;padding:0 24px;border-radius:999px;border:2px solid var(--blue);background:var(--blue);color:var(--blue-ink);font-weight:700;font-size:17px;text-decoration:none;cursor:pointer}
+.btn:hover{background:var(--blue-deep);border-color:var(--blue-deep)}
+.btn.ghost{background:transparent;color:var(--blue)}
+.btn.ghost:hover{background:var(--mist)}
+.btn.small{min-height:44px;padding:0 18px;font-size:16px}
+.btn.block{width:100%}
+.btn.danger{background:var(--red);border-color:var(--red);color:#fff}
+
+/* ---------- WEB ---------- */
+.topbar{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--paper) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between;height:68px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:20px;color:var(--ink);text-decoration:none}
+.mark{width:30px;height:30px;border-radius:9px;background:var(--blue);display:grid;place-items:center}
+.mark svg{width:18px;height:18px}
+.topnav{display:flex;align-items:center;gap:22px}
+.topnav a.link{color:var(--ink-2);text-decoration:none;font-size:16px}
+.topnav a.link:hover{color:var(--ink)}
+@media (max-width:760px){.topnav a.link{display:none}}
+
+.hero{padding:72px 0 56px}
+.hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:center}
+@media (max-width:900px){.hero .wrap{grid-template-columns:1fr;gap:40px}.hero{padding-top:44px}}
+.hero h1{font-size:clamp(46px,7vw,84px);line-height:1;letter-spacing:-.02em;margin:0 0 24px;font-weight:700}
+.hero p.lead{font-size:21px;color:var(--ink-2);max-width:34ch;margin:0 0 32px}
+.hero .actions{display:flex;gap:12px;flex-wrap:wrap}
+
+.promise{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-l);padding:28px;position:relative}
+.promise .tag{display:inline-block;font-size:14px;font-weight:700;color:var(--red);background:var(--red-soft);padding:4px 12px;border-radius:999px;margin-bottom:16px}
+.promise h3{margin:0 0 4px;font-size:22px}
+.promise .when{color:var(--ink-2);font-size:16px;margin:0 0 24px}
+.counter{display:flex;align-items:baseline;gap:12px;margin-bottom:8px}
+.counter b{font-size:72px;line-height:1;letter-spacing:-.03em;color:var(--red);font-variant-numeric:tabular-nums}
+.counter span{font-size:18px;color:var(--ink-2)}
+.track{height:10px;border-radius:999px;background:var(--mist);overflow:hidden;margin:16px 0 20px}
+.track i{display:block;height:100%;width:0;background:var(--red);border-radius:999px;transition:width 1.6s cubic-bezier(.2,.8,.2,1)}
+.promise ul{list-style:none;margin:0 0 20px;padding:0}
+.promise li{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-top:1px solid var(--line);font-size:17px}
+.promise li::before{content:"";flex:none;width:10px;height:10px;border-radius:50%;background:var(--red);margin-top:8px}
+.promise .foot{font-size:16px;color:var(--ink-2);margin:0;border-top:1px solid var(--line);padding-top:16px}
+
+section.block{padding:72px 0;border-top:1px solid var(--line)}
+section.block h2{font-size:clamp(32px,4.4vw,48px);line-height:1.08;letter-spacing:-.015em;margin:0 0 12px}
+section.block p.intro{color:var(--ink-2);font-size:20px;max-width:56ch;margin:0 0 40px}
+
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:0;counter-reset:s}
+@media (max-width:860px){.steps{grid-template-columns:1fr}}
+.steps li{padding:0 28px 0 0;position:relative}
+@media (max-width:860px){.steps li{padding:0 0 28px 0}}
+.steps li::before{counter-increment:s;content:counter(s);display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:var(--blue);color:var(--blue-ink);font-weight:700;font-size:20px;margin-bottom:16px}
+.steps li::after{content:"";position:absolute;top:22px;left:56px;right:12px;height:2px;background:var(--line)}
+.steps li:last-child::after{display:none}
+@media (max-width:860px){.steps li::after{display:none}}
+.steps h3{margin:0 0 6px;font-size:22px}
+.steps p{margin:0;color:var(--ink-2)}
+
+.features{display:grid;grid-template-columns:1fr 1fr;gap:0 56px;margin:0}
+@media (max-width:760px){.features{grid-template-columns:1fr}}
+.features div{padding:22px 0;border-bottom:1px solid var(--line)}
+.features dt{font-weight:700;font-size:20px;margin-bottom:4px}
+.features dd{margin:0;color:var(--ink-2)}
+
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+@media (max-width:900px){.plans{grid-template-columns:1fr}}
+.plan{border:1px solid var(--line);border-radius:var(--radius-m);padding:28px;background:var(--surface);display:flex;flex-direction:column}
+.plan.main{border:2px solid var(--blue)}
+.plan h3{margin:0;font-size:20px}
+.plan .price{font-size:44px;font-weight:700;letter-spacing:-.02em;margin:12px 0 4px}
+.plan .price small{font-size:17px;font-weight:400;color:var(--ink-2)}
+.plan .who{color:var(--ink-2);margin:0 0 18px;font-size:16px}
+.plan ul{margin:0 0 24px;padding-left:20px;flex:1}
+.plan li{margin-bottom:8px}
+
+.faq details{border-bottom:1px solid var(--line);padding:18px 0}
+.faq summary{cursor:pointer;font-weight:700;font-size:20px;list-style:none;display:flex;justify-content:space-between;gap:16px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";font-size:28px;line-height:1;color:var(--blue)}
+.faq details[open] summary::after{content:"\2212"}
+.faq details p{margin:12px 0 0;color:var(--ink-2);max-width:64ch}
+
+.join{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+@media (max-width:860px){.join{grid-template-columns:1fr;gap:28px}}
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
+.field label{font-weight:700;font-size:16px}
+.field input,.field select,.field textarea{min-height:52px;padding:12px 14px;border-radius:var(--radius-s);border:1.5px solid var(--line);background:var(--surface)}
+.field textarea{min-height:120px;resize:vertical}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--blue);outline:none;box-shadow:0 0 0 3px var(--mist)}
+.ok{display:none;background:var(--green-soft);color:var(--green);padding:16px;border-radius:var(--radius-s);font-weight:700}
+
+footer.site{padding:40px 0 56px;border-top:1px solid var(--line);color:var(--ink-2);font-size:16px}
+footer.site .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+</style>
+</head>
+<body>
+
+<!-- ================= WEB ================= -->
+<div id="web">
+  <header class="topbar">
+    <div class="wrap">
+      <a class="brand" href="#web" aria-label="Tracte Digne, inici">
+        <span class="mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 5-3.2 8.3-7 10-3.8-1.7-7-5-7-10V6l7-3z"/><path d="M8.5 12.2l2.4 2.3 4.6-4.8"/></svg></span>
+        Tracte Digne
+      </a>
+      <nav class="topnav" aria-label="Seccions">
+        <a class="link" href="#com-funciona">Com funciona</a>
+        <a class="link" href="#preus">Preus</a>
+        <a class="link" href="#preguntes">Preguntes</a>
+        <a class="btn small" href="#app">Prova l’app</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="wrap">
+        <div>
+          <h1>Defensem el resident:</h1>
+          <p class="lead">Tracte Digne guarda cada incidència, cada resposta i cada promesa de la residència. Perquè el teu familiar estigui ben atès, i perquè, quan calgui reclamar, tinguis les proves.</p>
+          <div class="actions">
+            <a class="btn" href="#app">Prova l’app</a>
+            <a class="btn ghost" href="#apunta-t">Vull ser-hi</a>
+          </div>
+        </div>
+        <article class="promise" aria-label="Exemple de promeses pendents">
+          <span class="tag">Promeses pendents</span>
+          <h3>Reunió de famílies amb la Direcció</h3>
+          <p class="when">23 de setembre de 2026</p>
+          <div class="counter"><b id="days">0</b><span>dies d’espera</span></div>
+          <div class="track" aria-hidden="true"><i id="track"></i></div>
+          <ul>
+            <li>Safates especials per a residents amb diabetis, al·lèrgies o intoleràncies</li>
+            <li>Un xip a la roba perquè no es perdi a la bugaderia</li>
+            <li>Un sistema nou perquè cada resident prengui la seva medicació</li>
+          </ul>
+          <p class="foot">Tracte Digne t’avisa quan una promesa venç i et prepara la reclamació amb les dates i les proves.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="block" id="com-funciona">
+      <div class="wrap">
+        <h2>Com funciona:</h2>
+        <p class="intro">De la foto al mòbil a la reclamació formal, sense perdre res pel camí.</p>
+        <ol class="steps">
+          <li><h3>Registra</h3><p>Fes una foto, tria què ha passat i quina gravetat té. Queda desat amb la data i l’hora.</p></li>
+          <li><h3>Comunica</h3><p>L’app avisa formalment la residència i compta el termini que té per respondre.</p></li>
+          <li><h3>Escala</h3><p>Si no es resol, et prepara la queixa per a la Inspecció o el Síndic. I si cal, t’acompanya un advocat.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="block">
+      <div class="wrap">
+        <h2>Tot el que passa, documentat:</h2>
+        <p class="intro">Les reunions s’obliden i les promeses es repeteixen. Les proves, no.</p>
+        <dl class="features">
+          <div><dt>Historial del teu familiar</dt><dd>Totes les incidències, respostes i acords en una sola línia de temps.</dd></div>
+          <div><dt>Promeses amb data</dt><dd>Cada compromís de la Direcció queda apuntat amb el dia que venç.</dd></div>
+          <div><dt>Les famílies, juntes</dt><dd>Veus si a la teva planta passa el mateix, i prepareu les reunions amb dades.</dd></div>
+          <div><dt>Dossier de proves</dt><dd>Un PDF amb fotos, dates i empremtes digitals que demostren que res no s’ha modificat.</dd></div>
+          <div><dt>Nota de la residència</dt><dd>Una nota de 0 a 10 feta amb incidències verificades, no amb opinions soltes.</dd></div>
+          <div><dt>Advocats quan cal</dt><dd>Consultes amb advocats especialitzats en dret social i sanitari.</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <section class="block" id="preus">
+      <div class="wrap">
+        <h2>Preus:</h2>
+        <p class="intro">Menys de l’1&nbsp;% del que costa una plaça de residència.</p>
+        <div class="plans">
+          <div class="plan">
+            <h3>Consulta</h3>
+            <div class="price">0&nbsp;€</div>
+            <p class="who">Per conèixer les residències</p>
+            <ul><li>Notes i fitxes de totes les residències</li><li>3 incidències al mes</li><li>Grup de famílies de la residència</li></ul>
+            <a class="btn ghost" href="#apunta-t">Vull ser-hi</a>
+          </div>
+          <div class="plan main">
+            <h3>Família</h3>
+            <div class="price">9,90&nbsp;€<small> /mes</small></div>
+            <p class="who">Per seguir el dia a dia</p>
+            <ul><li>Incidències il·limitades</li><li>Historial i promeses amb avisos</li><li>Dossier de proves en PDF</li><li>Plantilles de reclamació</li></ul>
+            <a class="btn" href="#apunta-t">Vull ser-hi</a>
+          </div>
+          <div class="plan">
+            <h3>Família + Jurídic</h3>
+            <div class="price">24,90&nbsp;€<small> /mes</small></div>
+            <p class="who">Quan cal anar més lluny</p>
+            <ul><li>Tot el pla Família</li><li>Consultes il·limitades amb advocat</li><li>4 escrits revisats a l’any</li><li>Gestió de queixes a la Inspecció i al Síndic</li></ul>
+            <a class="btn ghost" href="#apunta-t">Vull ser-hi</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="block faq" id="preguntes">
+      <div class="wrap">
+        <h2>Preguntes:</h2>
+        <p class="intro">El que més ens pregunten les famílies.</p>
+        <details><summary>La residència sabrà que faig servir l’app?</summary><p>Només quan tu decideixis comunicar-li una incidència. Llavors rep un avís formal amb la data, com si fos un escrit registrat.</p></details>
+        <details><summary>Qui pot veure les meves incidències?</summary><p>Només tu, els familiars que autoritzis i, si ho demanes, el gestor o l’advocat assignat. A la nota pública només hi surten dades agregades i anònimes.</p></details>
+        <details><summary>Hi surten noms de treballadors?</summary><p>No. La nota parla de la residència, mai de persones concretes. El que volem és que el servei millori, no assenyalar ningú.</p></details>
+        <details><summary>Les proves són meves?</summary><p>Sí. Pots descarregar-te el dossier complet quan vulguis, i esborrar el compte i les dades en qualsevol moment.</p></details>
+      </div>
+    </section>
+
+    <section class="block" id="apunta-t">
+      <div class="wrap join">
+        <div>
+          <h2>El teu familiar, ben atès:</h2>
+          <p class="intro">Estem preparant el primer pilot amb famílies de residències del Vallès. Apunta-t’hi i et direm quan obrim a la teva residència.</p>
+        </div>
+        <form id="joinForm" novalidate>
+          <div class="field"><label for="jn">Nom</label><input id="jn" name="nom" autocomplete="name" required></div>
+          <div class="field"><label for="je">Correu electrònic</label><input id="je" name="correu" type="email" autocomplete="email" required></div>
+          <div class="field"><label for="jr">Residència del teu familiar</label><input id="jr" name="residencia" placeholder="Nom i municipi"></div>
+          <button class="btn block" type="submit">Apunta’m</button>
+          <p class="ok" id="joinOk" role="status">T’hem apuntat. Et direm quan obrim a la teva residència.</p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site">
+    <div class="wrap">
+      <span>Tracte Digne. Prototip de demostració amb dades d’exemple.</span>
+      <a href="#app">Obrir l’app</a>
+    </div>
+  </footer>
+</div>
+
+<!-- ================= APP ================= -->
+<style>
+#app{min-height:100vh;background:var(--mist)}
+.stage{max-width:1120px;margin:0 auto;padding:40px 24px;display:grid;grid-template-columns:1fr 410px;gap:64px;align-items:center;min-height:100vh}
+.stage-note h2{font-size:44px;line-height:1.05;letter-spacing:-.015em;margin:18px 0 14px}
+.stage-note p{color:var(--ink-2);font-size:19px;max-width:40ch}
+.stage-note .row{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}
+.phone{width:410px;height:840px;border-radius:52px;border:11px solid var(--ink);background:var(--paper);overflow:hidden;position:relative;box-shadow:0 30px 60px -30px rgba(20,33,61,.45)}
+@media (max-width:860px){
+  .stage{display:block;padding:0;min-height:0}
+  .stage-note{display:none}
+  .phone{width:100%;height:100dvh;border:0;border-radius:0;box-shadow:none}
+}
+.screen{position:absolute;inset:0;display:flex;flex-direction:column}
+.appbar{padding:22px 20px 14px;padding-top:max(22px,env(safe-area-inset-top));background:var(--paper);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px;min-height:76px}
+.appbar h1{font-size:22px;margin:0;line-height:1.2;flex:1}
+.appbar .sub{display:block;font-size:14px;font-weight:400;color:var(--ink-2)}
+.iconbtn{width:44px;height:44px;border-radius:50%;border:1.5px solid var(--line);background:var(--surface);display:grid;place-items:center;cursor:pointer;flex:none}
+.iconbtn svg{width:22px;height:22px}
+.view{flex:1;overflow-y:auto;padding:20px 20px 110px}
+.tabs{position:absolute;left:0;right:0;bottom:0;display:grid;grid-template-columns:repeat(4,1fr);background:var(--surface);border-top:1px solid var(--line);padding:8px 6px;padding-bottom:max(12px,env(safe-area-inset-bottom))}
+.tabs button{background:none;border:0;display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 0;font-size:13px;color:var(--ink-2);cursor:pointer;border-radius:12px}
+.tabs button svg{width:24px;height:24px}
+.tabs button[aria-current="page"]{color:var(--blue);font-weight:700}
+.tabs button[aria-current="page"] svg{stroke-width:2.4}
+
+.hello{font-size:30px;line-height:1.1;margin:4px 0 16px;letter-spacing:-.01em}
+.resident{display:flex;gap:14px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-m);padding:14px 16px;margin-bottom:18px}
+.avatar{width:52px;height:52px;border-radius:50%;background:var(--mist);color:var(--blue);display:grid;place-items:center;font-weight:700;font-size:19px;flex:none}
+.resident b{display:block;font-size:18px}
+.resident span{font-size:15px;color:var(--ink-2)}
+.alerts{display:grid;gap:10px;margin-bottom:18px}
+.alert{display:flex;align-items:center;gap:14px;border-radius:var(--radius-m);padding:14px 16px;text-align:left;border:0;width:100%;cursor:pointer}
+.alert b{font-size:30px;line-height:1;min-width:34px;font-variant-numeric:tabular-nums}
+.alert span{font-size:16px;font-weight:700}
+.alert small{display:block;font-weight:400;font-size:14px;opacity:.85}
+.alert.red{background:var(--red-soft);color:var(--red)}
+.alert.amber{background:var(--amber-soft);color:var(--amber)}
+.alert.green{background:var(--green-soft);color:var(--green)}
+.h3{font-size:18px;margin:26px 0 10px}
+
+.list{list-style:none;margin:0;padding:0}
+.item{display:flex;gap:12px;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--line);cursor:pointer;background:none;border-left:0;border-right:0;border-top:0;width:100%;text-align:left}
+.item .dot{width:12px;height:12px;border-radius:50%;margin-top:7px;flex:none}
+.item .txt{flex:1;min-width:0}
+.item .t{font-weight:700;font-size:17px;display:block}
+.item .m{font-size:14px;color:var(--ink-2)}
+.pill{display:inline-block;font-size:13px;font-weight:700;padding:3px 10px;border-radius:999px;white-space:nowrap}
+.p-red{background:var(--red-soft);color:var(--red)}
+.p-amber{background:var(--amber-soft);color:var(--amber)}
+.p-green{background:var(--green-soft);color:var(--green)}
+.p-blue{background:var(--mist);color:var(--blue)}
+.d-red{background:var(--red)}.d-amber{background:var(--amber)}.d-green{background:var(--green)}.d-blue{background:var(--blue)}
+
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:6px}
+.chip{min-height:42px;padding:0 16px;border-radius:999px;border:1.5px solid var(--line);background:var(--surface);cursor:pointer;font-size:16px}
+.chip[aria-pressed="true"]{background:var(--blue);border-color:var(--blue);color:var(--blue-ink);font-weight:700}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);border:1.5px solid var(--line);border-radius:var(--radius-m);overflow:hidden}
+.seg button{min-height:56px;border:0;background:var(--surface);cursor:pointer;font-size:16px;line-height:1.15}
+.seg button+button{border-left:1.5px solid var(--line)}
+.seg button small{display:block;font-size:12.5px;color:var(--ink-2)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper);font-weight:700}
+.seg button[aria-pressed="true"] small{color:inherit;opacity:.8}
+.err{color:var(--red);font-size:15px;font-weight:700;margin:4px 0 0;min-height:1em}
+.check{display:flex;gap:10px;align-items:flex-start;font-size:16px;margin:8px 0 18px}
+.check input{width:22px;height:22px;margin-top:2px;accent-color:var(--blue)}
+.photo{display:block;border:1.5px dashed var(--line);border-radius:var(--radius-m);padding:16px;text-align:center;color:var(--ink-2);cursor:pointer;font-size:16px}
+.photo img{max-width:100%;border-radius:8px;display:block;margin:0 auto}
+
+.detail-head{margin-bottom:14px}
+.detail-head h2{font-size:24px;line-height:1.2;margin:8px 0 6px}
+.detail-head p{margin:0;color:var(--ink-2)}
+.evidence{margin:16px 0;border:1px solid var(--line);border-radius:var(--radius-m);overflow:hidden;background:var(--surface)}
+.evidence img{display:block;width:100%;max-height:220px;object-fit:cover}
+.evidence .hash{padding:10px 14px;font-size:13px;color:var(--ink-2);word-break:break-all}
+.deadline{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-m);padding:14px 16px;margin:14px 0;font-size:16px}
+.timeline{list-style:none;margin:6px 0 20px;padding:0 0 0 22px;border-left:2px solid var(--line)}
+.timeline li{position:relative;padding:0 0 16px 8px}
+.timeline li::before{content:"";position:absolute;left:-30px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--surface);border:2.5px solid var(--blue)}
+.timeline b{display:block;font-size:16px}
+.timeline span{font-size:14px;color:var(--ink-2)}
+.timeline p{margin:4px 0 0;font-size:15px}
+.stack{display:grid;gap:10px}
+
+.score{display:flex;align-items:flex-end;gap:14px;margin:6px 0 4px}
+.score b{font-size:88px;line-height:.9;letter-spacing:-.04em;color:var(--blue)}
+.score span{color:var(--ink-2);font-size:16px;padding-bottom:8px}
+.bars{margin:18px 0 8px}
+.bar{margin-bottom:14px}
+.bar div{display:flex;justify-content:space-between;font-size:15px;margin-bottom:5px}
+.bar div span{color:var(--ink-2)}
+.bar i{display:block;height:8px;border-radius:999px;background:var(--mist);overflow:hidden}
+.bar i em{display:block;height:100%;background:var(--blue);border-radius:999px}
+.facts{margin:0;display:grid;grid-template-columns:auto 1fr;gap:8px 16px;font-size:16px}
+.facts dt{color:var(--ink-2)}
+.facts dd{margin:0;font-weight:700}
+.note{font-size:14px;color:var(--ink-2);margin:12px 0 0}
+
+.menu{list-style:none;margin:0;padding:0;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-m);overflow:hidden}
+.menu button{width:100%;text-align:left;background:none;border:0;padding:16px;font-size:17px;cursor:pointer;display:flex;justify-content:space-between;gap:12px}
+.menu li+li button{border-top:1px solid var(--line)}
+.menu small{color:var(--ink-2)}
+
+.modal{position:fixed;inset:0;background:rgba(14,21,37,.55);display:none;align-items:flex-end;justify-content:center;z-index:50;padding:16px}
+.modal.open{display:flex}
+@media (min-width:600px){.modal{align-items:center}}
+.sheet{background:var(--paper);border-radius:var(--radius-l);max-width:520px;width:100%;max-height:88vh;overflow:auto;padding:24px}
+.sheet h2{margin:0 0 8px;font-size:24px}
+.sheet p{color:var(--ink-2);margin:0 0 16px}
+.sheet pre{white-space:pre-wrap;font-family:var(--font);font-size:16px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-s);padding:14px;margin:0 0 16px}
+.toast{position:fixed;left:50%;bottom:32px;transform:translate(-50%,20px);background:var(--ink);color:var(--paper);padding:14px 20px;border-radius:999px;font-weight:700;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:60;max-width:90vw;text-align:center}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+</style>
+
+<div id="app" hidden>
+  <div class="stage">
+    <aside class="stage-note">
+      <a class="brand" href="#web"><span class="mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 5-3.2 8.3-7 10-3.8-1.7-7-5-7-10V6l7-3z"/><path d="M8.5 12.2l2.4 2.3 4.6-4.8"/></svg></span>Tracte Digne</a>
+      <h2>L’app, tal com la veurà una família:</h2>
+      <p>Prova de registrar una incidència, obre’n una per veure’n l’historial o mira la nota de la residència. Les dades són d’exemple i es guarden només en aquest navegador.</p>
+      <div class="row">
+        <a class="btn ghost" href="#web">Tornar a la web</a>
+        <button class="btn ghost" type="button" data-action="reset">Restablir l’exemple</button>
+      </div>
+    </aside>
+    <div class="phone">
+      <div class="screen">
+        <header class="appbar" id="appbar"></header>
+        <main class="view" id="view" tabindex="-1"></main>
+        <nav class="tabs" aria-label="Seccions de l’app">
+          <button type="button" data-tab="inici"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/></svg>Inici</button>
+          <button type="button" data-tab="incidencies"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13M8 12h13M8 18h13"/><circle cx="4" cy="6" r="1"/><circle cx="4" cy="12" r="1"/><circle cx="4" cy="18" r="1"/></svg>Incidències</button>
+          <button type="button" data-tab="residencia"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V8l8-5 8 5v13"/><path d="M9 21v-6h6v6"/></svg>Residència</button>
+          <button type="button" data-tab="perfil"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>Perfil</button>
+        </nav>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="sheet" id="sheet"></div></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+"use strict";
+const KEY = "tractedigne-demo-v1";
+const $ = (s, r=document) => r.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const DAY = 86400000;
+const fmtDate = d => new Date(d).toLocaleDateString("ca-ES",{day:"numeric",month:"long",year:"numeric"});
+const fmtShort = d => new Date(d).toLocaleDateString("ca-ES",{day:"numeric",month:"short",year:"numeric"});
+const fmtDateTime = d => new Date(d).toLocaleString("ca-ES",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"});
+const daysBetween = (a,b) => Math.floor((new Date(b) - new Date(a)) / DAY);
+
+/* ---------- Dades d’exemple ---------- */
+const RESIDENT = {name:"Montserrat Puig", initials:"MP", where:"Planta 3, habitació 312"};
+const USER = {name:"Jordi", full:"Jordi Puig", relation:"Fill"};
+const RESIDENCE = {name:"Residència Els Til·lers", town:"Vallès Oriental", places:120, owner:"Iniciativa social (fundació)", concert:"Sí, 64 places", families:38,
+  factors:[["Incidències per cada 100 places",5.2,35],["Resolució dins de termini",6.8,25],["No reincidència",5.5,15],["Satisfacció de les famílies",6.4,15],["Dades oficials",7.0,10]]};
+const SEV = {alta:{label:"Alta",hours:24,txt:"24 hores"}, mitjana:{label:"Mitjana",hours:72,txt:"72 hores"}, baixa:{label:"Baixa",hours:360,txt:"15 dies"}};
+const CATS = ["Medicació","Tracte","Higiene","Alimentació","Temperatura","Manteniment","Bugaderia","Robatori","Altres"];
+
+function seed(){
+  return {
+    incidents:[
+      {id:"i1",cat:"Medicació",sev:"alta",title:"No li han donat la medicació de la nit",desc:"A les 21:40 la pastilla de la pressió encara era al pastiller. La infermera de torn no ho sabia.",date:"2026-11-08T21:40:00",status:"oberta",photo:null,hash:"9f2c4e81a7d03b56c1e8f94a2d7b60e3c5a19f8d2e47b0c6a3d9e1f5b7c2a840",
+       events:[{t:"2026-11-08T21:52:00",k:"Registrada",d:"Amb una foto del pastiller"},{t:"2026-11-08T21:53:00",k:"Comunicada a la residència",d:"Avís formal enviat a la Direcció"}]},
+      {id:"i2",cat:"Tracte",sev:"alta",title:"25 minuts per respondre el timbre",desc:"Va trucar perquè necessitava anar al lavabo i ningú no va venir fins al cap de 25 minuts.",date:"2026-11-02T03:10:00",status:"resposta",photo:null,hash:"4b7e1d90c3a2f85e6d1b47c09a3e2f81d5c6b7a49e0f3d2c1b8a7e6f5d4c3b2a",
+       events:[{t:"2026-11-02T09:15:00",k:"Registrada",d:"Explicat per la mateixa resident"},{t:"2026-11-02T09:16:00",k:"Comunicada a la residència",d:"Avís formal enviat a la Direcció"},{t:"2026-11-02T17:40:00",k:"Resposta de la residència",d:"Aquella nit hi havia una baixa sense cobrir. Reforçaran el torn de nit des de dilluns."}]},
+      {id:"i3",cat:"Bugaderia",sev:"baixa",title:"Roba d’una altra persona a l’armari",desc:"Tres peces que no són seves, i en falten dues de pròpies.",date:"2026-11-05T11:00:00",status:"oberta",photo:null,hash:"c1d2e3f4a5b6978877665544332211ffeeddccbbaa99887766554433221100aa",
+       events:[{t:"2026-11-05T11:05:00",k:"Registrada",d:""},{t:"2026-11-05T11:06:00",k:"Comunicada a la residència",d:"Avís formal enviat a la Direcció"}]},
+      {id:"i4",cat:"Temperatura",sev:"mitjana",title:"30 °C a l’habitació",desc:"L’aire condicionat de la planta 3 no funciona des de fa una setmana.",date:"2026-08-14T16:20:00",status:"resolta",photo:null,hash:"7a6b5c4d3e2f1a0b9c8d7e6f5a4b3c2d1e0f9a8b7c6d5e4f3a2b1c0d9e8f7a6b",
+       events:[{t:"2026-08-14T16:25:00",k:"Registrada",d:"Amb una foto del termòmetre"},{t:"2026-08-14T16:26:00",k:"Comunicada a la residència",d:"Avís formal enviat a la Direcció"},{t:"2026-08-16T10:00:00",k:"Resposta de la residència",d:"No troben tècnics disponibles. Ho estan gestionant."},{t:"2026-09-02T12:00:00",k:"Resolta",d:"L’aire condicionat torna a funcionar."}]}
+    ],
+    commitments:[
+      {id:"c1",title:"Instal·lar càmeres als passadissos",promised:"2025-03-12",due:null,done:null},
+      {id:"c2",title:"Safates específiques per a dietes especials",promised:"2026-09-23",due:"2026-12-31",done:null},
+      {id:"c3",title:"Una hora de manteniment setmanal per planta",promised:"2026-09-23",due:"2026-10-31",done:"2026-10-15"}
+    ]
+  };
+}
+let state;
+try { state = JSON.parse(localStorage.getItem(KEY)) || seed(); } catch(e){ state = seed(); }
+function save(){ try { localStorage.setItem(KEY, JSON.stringify(state)); } catch(e){ toast("No s’ha pogut desar en aquest navegador."); } }
+
+/* ---------- Estat derivat ---------- */
+function deadlineOf(i){ return new Date(new Date(i.events[0].t).getTime() + SEV[i.sev].hours*3600000); }
+function statusOf(i){
+  if(i.status==="resolta") return {key:"resolta",label:"Resolta",pill:"p-green",dot:"d-green"};
+  if(i.status==="escalada") return {key:"escalada",label:"Escalada",pill:"p-red",dot:"d-red"};
+  if(i.status==="resposta") return {key:"resposta",label:"Resposta rebuda",pill:"p-blue",dot:"d-blue"};
+  if(Date.now() > deadlineOf(i)) return {key:"vencut",label:"Termini vençut",pill:"p-red",dot:"d-red"};
+  return {key:"oberta",label:"Esperant resposta",pill:"p-amber",dot:"d-amber"};
+}
+function commitStatus(c){
+  if(c.done) return {label:"Complerta",pill:"p-green",dot:"d-green",line:"Complerta el "+fmtDate(c.done)};
+  if(!c.due) return {label:"Sense data",pill:"p-red",dot:"d-red",line:"Fa "+daysBetween(c.promised,new Date())+" dies, sense data de compliment"};
+  const left = daysBetween(new Date(), c.due);
+  if(left < 0) return {label:"Vençuda",pill:"p-red",dot:"d-red",line:"Va vèncer el "+fmtDate(c.due)};
+  return {label:"En termini",pill:"p-amber",dot:"d-amber",line:"Venç d’aquí "+left+" dies"};
+}
+function score(){ return RESIDENCE.factors.reduce((s,f)=>s+f[1]*f[2]/100,0); }
+
+/* ---------- Navegació ---------- */
+let screen = {name:"inici"};
+function go(name, extra){ screen = Object.assign({name}, extra||{}); render(); const v=$("#view"); v.scrollTop=0; v.focus({preventScroll:true}); }
+const ICON_BACK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>';
+const ICON_PLUS = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>';
+
+function bar(title, sub, left, right){
+  $("#appbar").innerHTML = (left||"") + `<h1>${esc(title)}${sub?`<span class="sub">${esc(sub)}</span>`:""}</h1>` + (right||"");
+}
+function render(){
+  const tab = {inici:"inici",incidencies:"incidencies",nova:"incidencies",detall:"incidencies",residencia:"residencia",perfil:"perfil"}[screen.name];
+  document.querySelectorAll(".tabs button").forEach(b => b.setAttribute("aria-current", b.dataset.tab===tab ? "page" : "false"));
+  ({inici:viewHome,incidencies:viewList,nova:viewNew,detall:viewDetail,residencia:viewResidence,perfil:viewProfile})[screen.name]();
+}
+
+/* ---------- Pantalles ---------- */
+function viewHome(){
+  bar("Tracte Digne","");
+  const st = state.incidents.map(statusOf);
+  const late = st.filter(s=>s.key==="vencut").length;
+  const waiting = st.filter(s=>s.key==="oberta").length;
+  const brokenPromises = state.commitments.filter(c=>!c.done && (!c.due || daysBetween(new Date(),c.due)<0)).length;
+  const events = state.incidents.flatMap(i=>i.events.map(e=>({...e,i}))).sort((a,b)=>new Date(b.t)-new Date(a.t)).slice(0,4);
+  $("#view").innerHTML = `
+    <p class="hello">Hola, ${esc(USER.name)}:</p>
+    <div class="resident"><div class="avatar">${RESIDENT.initials}</div><div><b>${esc(RESIDENT.name)}</b><span>${esc(RESIDENCE.name)}, ${esc(RESIDENT.where)}</span></div></div>
+    <div class="alerts">
+      ${late?`<button class="alert red" data-go="incidencies" data-filter="obertes"><b>${late}</b><span>${late===1?"Incidència amb el termini vençut":"Incidències amb el termini vençut"}<small>La residència no ha respost a temps</small></span></button>`:""}
+      ${waiting?`<button class="alert amber" data-go="incidencies" data-filter="obertes"><b>${waiting}</b><span>Esperant resposta<small>Dins del termini</small></span></button>`:""}
+      ${brokenPromises?`<button class="alert red" data-go="residencia"><b>${brokenPromises}</b><span>${brokenPromises===1?"Promesa sense complir":"Promeses sense complir"}<small>Compromisos de la Direcció</small></span></button>`:""}
+      ${!late&&!waiting&&!brokenPromises?`<div class="alert green"><b>✓</b><span>Tot al dia<small>Cap incidència pendent</small></span></div>`:""}
+    </div>
+    <button class="btn block" data-go="nova">${ICON_PLUS.replace('<svg','<svg width="22" height="22"')}Registrar incidència</button>
+    <h2 class="h3">Darrera activitat</h2>
+    <ul class="list">${events.map(e=>`<li><button class="item" data-open="${e.i.id}"><span class="dot ${statusOf(e.i).dot}"></span><span class="txt"><span class="t">${esc(e.k)}</span><span class="m">${esc(e.i.title)} · ${fmtDateTime(e.t)}</span></span></button></li>`).join("")}</ul>`;
+}
+
+function viewList(){
+  const f = screen.filter || "totes";
+  bar("Incidències", RESIDENT.name, "", `<button class="iconbtn" data-go="nova" aria-label="Registrar incidència">${ICON_PLUS}</button>`);
+  const items = state.incidents.slice().sort((a,b)=>new Date(b.date)-new Date(a.date)).filter(i=>{
+    const k = statusOf(i).key; return f==="totes" || (f==="obertes" ? k!=="resolta" : k==="resolta");
+  });
+  $("#view").innerHTML = `
+    <div class="chips" role="group" aria-label="Filtre">
+      ${[["totes","Totes"],["obertes","Obertes"],["resoltes","Resoltes"]].map(([k,l])=>`<button class="chip" data-filter-set="${k}" aria-pressed="${f===k}">${l}</button>`).join("")}
+    </div>
+    ${items.length?`<ul class="list">${items.map(i=>{const s=statusOf(i);return `<li><button class="item" data-open="${i.id}"><span class="dot ${s.dot}"></span><span class="txt"><span class="t">${esc(i.title)}</span><span class="m">${esc(i.cat)} · ${fmtShort(i.date)}</span></span><span class="pill ${s.pill}">${s.label}</span></button></li>`}).join("")}</ul>`
+    :`<p class="note" style="font-size:17px;margin-top:24px">No hi ha incidències en aquest filtre. Si ha passat alguna cosa, registra-la ara i quedarà guardada amb la data.</p><button class="btn block" data-go="nova" style="margin-top:16px">Registrar incidència</button>`}`;
+}
+
+let draft = {};
+function viewNew(){
+  draft = {cat:null, sev:"mitjana", photo:null};
+  bar("Nova incidència", RESIDENT.name, `<button class="iconbtn" data-go="incidencies" aria-label="Tornar">${ICON_BACK}</button>`);
+  $("#view").innerHTML = `
+    <form id="newForm" novalidate>
+      <div class="field"><label>Què ha passat?</label>
+        <div class="chips" role="group" aria-label="Categoria">${CATS.map(c=>`<button type="button" class="chip" data-cat="${c}" aria-pressed="false">${c}</button>`).join("")}</div>
+        <p class="err" id="errCat"></p></div>
+      <div class="field"><label for="nt">Resum en una frase</label><input id="nt" maxlength="90" placeholder="Per exemple: no li han canviat el bolquer al matí"><p class="err" id="errTitle"></p></div>
+      <div class="field"><label for="nd">Detalls</label><textarea id="nd" placeholder="Quan, on, qui ho va veure…"></textarea></div>
+      <div class="field"><label>Gravetat</label>
+        <div class="seg" role="group" aria-label="Gravetat">${Object.entries(SEV).reverse().map(([k,v])=>`<button type="button" data-sev="${k}" aria-pressed="${k==="mitjana"}">${v.label}<small>resposta en ${v.txt}</small></button>`).join("")}</div></div>
+      <div class="field"><label for="np">Foto o document</label>
+        <label class="photo" for="np" id="photoBox">Afegeix una foto (opcional)</label>
+        <input id="np" type="file" accept="image/*" capture="environment" hidden></div>
+      <label class="check"><input type="checkbox" id="nc" checked><span>Comunicar-ho ara a la residència amb un avís formal</span></label>
+      <button class="btn block" type="submit">Registrar incidència</button>
+    </form>`;
+}
+
+function viewDetail(){
+  const i = state.incidents.find(x=>x.id===screen.id); if(!i){ go("incidencies"); return; }
+  const s = statusOf(i);
+  bar(i.cat, fmtDate(i.date), `<button class="iconbtn" data-go="incidencies" aria-label="Tornar">${ICON_BACK}</button>`);
+  const dl = deadlineOf(i);
+  const deadlineTxt = s.key==="vencut" ? `El termini de resposta (${SEV[i.sev].txt}) va acabar el ${fmtDateTime(dl)}.`
+    : s.key==="oberta" ? `La residència té fins al ${fmtDateTime(dl)} per respondre.` : "";
+  $("#view").innerHTML = `
+    <div class="detail-head"><span class="pill ${s.pill}">${s.label}</span> <span class="pill p-blue">Gravetat ${SEV[i.sev].label.toLowerCase()}</span>
+      <h2>${esc(i.title)}</h2>${i.desc?`<p>${esc(i.desc)}</p>`:""}</div>
+    ${deadlineTxt?`<div class="deadline">${deadlineTxt}</div>`:""}
+    <div class="evidence">${i.photo?`<img src="${i.photo}" alt="Foto adjunta a la incidència">`:""}<div class="hash">Empremta digital de la prova: ${esc(i.hash)}</div></div>
+    <h3 class="h3">Historial</h3>
+    <ol class="timeline">${i.events.map(e=>`<li><b>${esc(e.k)}</b><span>${fmtDateTime(e.t)}</span>${e.d?`<p>${esc(e.d)}</p>`:""}</li>`).join("")}</ol>
+    <div class="stack">
+      ${s.key!=="resolta"?`<button class="btn" data-action="resolve">Marcar com a resolta</button>`:""}
+      ${s.key==="oberta"||s.key==="vencut"?`<button class="btn ghost" data-action="reply">Afegir la resposta de la residència</button>`:""}
+      ${s.key!=="resolta"?`<button class="btn ghost" data-action="escalate">Preparar queixa a la Inspecció</button>`:""}
+      <button class="btn ghost" data-action="dossier">Generar dossier de proves</button>
+    </div>`;
+}
+
+function viewResidence(){
+  bar(RESIDENCE.name, RESIDENCE.town);
+  const sc = score();
+  $("#view").innerHTML = `
+    <div class="score"><b>${sc.toFixed(1).replace(".",",")}</b><span>sobre 10, amb ${RESIDENCE.families} famílies verificades</span></div>
+    <div class="bars">${RESIDENCE.factors.map(([l,v,w])=>`<div class="bar"><div>${esc(l)} <span>${v.toFixed(1).replace(".",",")}</span></div><i><em style="width:${v*10}%"></em></i></div>`).join("")}</div>
+    <h3 class="h3">Promeses de la Direcció</h3>
+    <ul class="list">${state.commitments.map(c=>{const s=commitStatus(c);return `<li><div class="item" style="cursor:default"><span class="dot ${s.dot}"></span><span class="txt"><span class="t">${esc(c.title)}</span><span class="m">Promès el ${fmtDate(c.promised)}. ${s.line}.</span></span><span class="pill ${s.pill}">${s.label}</span></div></li>`}).join("")}</ul>
+    <h3 class="h3">Dades oficials</h3>
+    <dl class="facts"><dt>Places</dt><dd>${RESIDENCE.places}</dd><dt>Titularitat</dt><dd>${esc(RESIDENCE.owner)}</dd><dt>Places concertades</dt><dd>${esc(RESIDENCE.concert)}</dd></dl>
+    <p class="note">Residència d’exemple. La nota es calcula amb incidències verificades, el temps de resolució i dades oficials. La residència té dret de rèplica.</p>`;
+}
+
+function viewProfile(){
+  bar("Perfil", USER.full);
+  $("#view").innerHTML = `
+    <div class="resident"><div class="avatar">JP</div><div><b>${esc(USER.full)}</b><span>${esc(USER.relation)} de ${esc(RESIDENT.name)}</span></div></div>
+    <ul class="menu">
+      <li><button data-action="lawyer">Parlar amb un advocat <small>Inclòs al teu pla</small></button></li>
+      <li><button data-action="plan">El meu pla <small>Família + Jurídic</small></button></li>
+      <li><button data-action="family">Familiars autoritzats <small>Anna Puig</small></button></li>
+      <li><button data-action="export">Descarregar totes les meves dades</button></li>
+    </ul>
+    <h3 class="h3">Prototip</h3>
+    <ul class="menu">
+      <li><button data-action="reset">Restablir dades d’exemple</button></li>
+      <li><button data-action="web">Tornar a la web</button></li>
+    </ul>`;
+}
+
+/* ---------- Finestres ---------- */
+function modal(html){ $("#sheet").innerHTML = html; $("#modal").classList.add("open"); const f=$("#sheet").querySelector("textarea,button"); f&&f.focus(); }
+function closeModal(){ $("#modal").classList.remove("open"); }
+let toastTimer;
+function toast(msg){ const t=$("#toast"); t.textContent=msg; t.classList.add("show"); clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove("show"),2800); }
+
+function complaintText(i){
+  const sent = i.events.find(e=>e.k==="Comunicada a la residència");
+  return `A la Inspecció de Serveis Socials:
+
+Com a ${USER.relation.toLowerCase()} de ${RESIDENT.name}, resident a ${RESIDENCE.name} (${RESIDENT.where}), comunico la incidència següent:
+
+${i.title}, registrada el ${fmtDateTime(i.events[0].t)}.
+${i.desc}
+
+La residència en va ser informada el ${sent?fmtDateTime(sent.t):"(pendent)"} i, a data d’avui, no s’ha resolt.
+
+Adjunto les proves amb la seva empremta digital (${i.hash.slice(0,16)}…), que demostra que no s’han modificat.
+
+Demano que s’hi faci una inspecció i que se’m comuniquin per escrit les actuacions i les conclusions.
+
+${USER.full}`;
+}
+
+function dossierWindow(i){
+  const w = window.open("", "_blank");
+  if(!w){ toast("Permet les finestres emergents per veure el dossier."); return; }
+  w.document.write(`<!doctype html><html lang="ca"><head><meta charset="utf-8"><title>Dossier: ${esc(i.title)}</title>
+  <style>body{font-family:${getComputedStyle(document.body).fontFamily};max-width:720px;margin:40px auto;padding:0 24px;color:#14213D;line-height:1.5}h1{font-size:28px;margin:0 0 4px}small{color:#4A5672}table{width:100%;border-collapse:collapse;margin:20px 0}td,th{border-bottom:1px solid #D9DFEA;padding:8px;text-align:left;vertical-align:top}code{word-break:break-all}img{max-width:100%;margin:12px 0}</style></head><body>
+  <small>Tracte Digne · Dossier de proves</small><h1>${esc(i.title)}</h1>
+  <p><b>Resident:</b> ${esc(RESIDENT.name)}, ${esc(RESIDENCE.name)}, ${esc(RESIDENT.where)}<br><b>Categoria:</b> ${esc(i.cat)} · <b>Gravetat:</b> ${SEV[i.sev].label} · <b>Estat:</b> ${statusOf(i).label}</p>
+  <p>${esc(i.desc)}</p>${i.photo?`<img src="${i.photo}" alt="">`:""}
+  <table><tr><th>Data</th><th>Fet</th><th>Detall</th></tr>${i.events.map(e=>`<tr><td>${fmtDateTime(e.t)}</td><td>${esc(e.k)}</td><td>${esc(e.d)}</td></tr>`).join("")}</table>
+  <p><b>Empremta SHA-256 de la prova:</b><br><code>${esc(i.hash)}</code></p>
+  <p><small>Document generat el ${fmtDateTime(new Date())}. Prototip amb dades d’exemple.</small></p>
+  <script>window.onload=()=>window.print()<\/script></body></html>`);
+  w.document.close();
+}
+
+async function fingerprint(text){
+  try{
+    if(window.crypto && crypto.subtle){
+      const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text));
+      return [...new Uint8Array(buf)].map(b=>b.toString(16).padStart(2,"0")).join("");
+    }
+  }catch(e){}
+  let h=2166136261>>>0, out=""; for(let r=0;r<8;r++){ for(const ch of text+r){ h^=ch.charCodeAt(0); h=Math.imul(h,16777619)>>>0; } out+=h.toString(16).padStart(8,"0"); } return out;
+}
+function shrink(file){
+  return new Promise(res=>{
+    const fr=new FileReader(); fr.onload=()=>{ const img=new Image(); img.onload=()=>{
+      const k=Math.min(1,900/Math.max(img.width,img.height)); const c=document.createElement("canvas");
+      c.width=Math.round(img.width*k); c.height=Math.round(img.height*k); c.getContext("2d").drawImage(img,0,0,c.width,c.height);
+      res(c.toDataURL("image/jpeg",.72)); }; img.onerror=()=>res(null); img.src=fr.result; }; fr.onerror=()=>res(null); fr.readAsDataURL(file);
+  });
+}
+
+/* ---------- Esdeveniments ---------- */
+document.addEventListener("click", async ev=>{
+  const t = ev.target.closest("button,a,[data-go],[data-open]"); if(!t) return;
+  if(t.dataset.tab){ go(t.dataset.tab); return; }
+  if(t.dataset.go){ go(t.dataset.go, t.dataset.filter?{filter:t.dataset.filter}:null); return; }
+  if(t.dataset.open){ go("detall",{id:t.dataset.open}); return; }
+  if(t.dataset.filterSet){ go("incidencies",{filter:t.dataset.filterSet}); return; }
+  if(t.dataset.cat){ draft.cat=t.dataset.cat; document.querySelectorAll("[data-cat]").forEach(b=>b.setAttribute("aria-pressed", b===t)); $("#errCat").textContent=""; return; }
+  if(t.dataset.sev){ draft.sev=t.dataset.sev; document.querySelectorAll("[data-sev]").forEach(b=>b.setAttribute("aria-pressed", b===t)); return; }
+  const a = t.dataset.action; if(!a) return;
+  const i = screen.id && state.incidents.find(x=>x.id===screen.id);
+  const now = new Date().toISOString();
+  switch(a){
+    case "resolve": i.status="resolta"; i.events.push({t:now,k:"Resolta",d:"Marcada com a resolta per la família"}); save(); render(); toast("Incidència marcada com a resolta"); break;
+    case "reply": modal(`<h2 id="modalTitle">Resposta de la residència:</h2><p>Escriu què t’han dit i quan. Quedarà a l’historial.</p><div class="field"><textarea id="replyTxt" placeholder="Per exemple: la infermera diu que revisaran el pastiller cada nit"></textarea><p class="err" id="errReply"></p></div><div class="stack"><button class="btn" data-action="replySave">Afegir resposta</button><button class="btn ghost" data-action="close">Cancel·lar</button></div>`); break;
+    case "replySave": { const v=$("#replyTxt").value.trim(); if(!v){ $("#errReply").textContent="Escriu la resposta abans d’afegir-la."; return; }
+      i.status="resposta"; i.events.push({t:now,k:"Resposta de la residència",d:v}); save(); closeModal(); render(); toast("Resposta afegida"); break; }
+    case "escalate": modal(`<h2 id="modalTitle">Queixa a la Inspecció:</h2><p>L’hem preparada amb les dates i les proves. Revisa-la abans d’enviar-la.</p><pre id="complaint">${esc(complaintText(i))}</pre><div class="stack"><button class="btn" data-action="copy">Copiar el text</button><button class="btn ghost" data-action="markEscalated">Marcar com a enviada</button><button class="btn ghost" data-action="close">Tancar</button></div>`); break;
+    case "copy": try{ await navigator.clipboard.writeText($("#complaint").textContent); toast("Text copiat"); }catch(e){ toast("Selecciona el text i copia’l manualment."); } break;
+    case "markEscalated": i.status="escalada"; i.events.push({t:now,k:"Queixa enviada a la Inspecció",d:"Escalada per la família"}); save(); closeModal(); render(); toast("Queixa marcada com a enviada"); break;
+    case "dossier": dossierWindow(i); break;
+    case "lawyer": modal(`<h2 id="modalTitle">Parlar amb un advocat:</h2><p>Explica breument el cas. Un advocat especialitzat et respondrà en 48 hores.</p><div class="field"><textarea id="lawTxt" placeholder="Què ha passat i què voldries aconseguir"></textarea><p class="err" id="errLaw"></p></div><div class="stack"><button class="btn" data-action="lawSend">Enviar consulta</button><button class="btn ghost" data-action="close">Cancel·lar</button></div>`); break;
+    case "lawSend": if(!$("#lawTxt").value.trim()){ $("#errLaw").textContent="Explica el cas abans d’enviar la consulta."; return; } closeModal(); toast("Consulta enviada. Et respondrem en 48 hores."); break;
+    case "plan": toast("Pla Família + Jurídic: 24,90 € al mes"); break;
+    case "family": toast("Anna Puig pot veure i afegir incidències"); break;
+    case "export": { const blob=new Blob([JSON.stringify(state,null,2)],{type:"application/json"}); const u=URL.createObjectURL(blob); const l=document.createElement("a"); l.href=u; l.download="tractedigne-dades.json"; l.click(); URL.revokeObjectURL(u); toast("Dades descarregades"); break; }
+    case "reset": state=seed(); save(); go("inici"); toast("Dades d’exemple restablertes"); break;
+    case "web": location.hash="#web"; break;
+    case "close": closeModal(); break;
+  }
+});
+$("#modal").addEventListener("click", e=>{ if(e.target.id==="modal") closeModal(); });
+document.addEventListener("keydown", e=>{ if(e.key==="Escape") closeModal(); });
+
+document.addEventListener("change", async e=>{
+  if(e.target.id!=="np" || !e.target.files[0]) return;
+  draft.photo = await shrink(e.target.files[0]);
+  $("#photoBox").innerHTML = draft.photo ? `<img src="${draft.photo}" alt="Foto seleccionada">` : "No s’ha pogut llegir la imatge. Prova amb una altra.";
+});
+document.addEventListener("submit", async e=>{
+  if(e.target.id==="joinForm"){
+    e.preventDefault(); const f=e.target; const email=f.correu.value.trim();
+    if(!f.nom.value.trim() || !/^\S+@\S+\.\S+$/.test(email)){ toast("Escriu el nom i un correu vàlid."); return; }
+    try{ const l=JSON.parse(localStorage.getItem(KEY+"-waitlist")||"[]"); l.push({nom:f.nom.value,correu:email,residencia:f.residencia.value,t:new Date().toISOString()}); localStorage.setItem(KEY+"-waitlist",JSON.stringify(l)); }catch(err){}
+    f.querySelectorAll("input,button").forEach(x=>x.disabled=true); $("#joinOk").style.display="block"; return;
+  }
+  if(e.target.id!=="newForm") return;
+  e.preventDefault();
+  const title=$("#nt").value.trim(); let ok=true;
+  if(!draft.cat){ $("#errCat").textContent="Tria una categoria."; ok=false; }
+  if(!title){ $("#errTitle").textContent="Escriu què ha passat en una frase."; ok=false; } else $("#errTitle").textContent="";
+  if(!ok){ const first=[...document.querySelectorAll("#newForm .err")].find(x=>x.textContent); first&&first.parentElement.scrollIntoView({behavior:"smooth",block:"center"}); return; }
+  const t=new Date().toISOString(); const desc=$("#nd").value.trim();
+  const inc={id:"i"+Date.now(),cat:draft.cat,sev:draft.sev,title,desc,date:t,status:"oberta",photo:draft.photo,
+    hash:await fingerprint(title+desc+t+(draft.photo||"")),
+    events:[{t,k:"Registrada",d:draft.photo?"Amb una foto":""}]};
+  if($("#nc").checked) inc.events.push({t,k:"Comunicada a la residència",d:"Avís formal enviat a la Direcció"});
+  state.incidents.push(inc); save(); go("detall",{id:inc.id}); toast("Incidència registrada");
+});
+
+/* ---------- Web / app ---------- */
+function route(){
+  const app = location.hash==="#app";
+  $("#app").hidden=!app; $("#web").hidden=app;
+  if(app){ window.scrollTo(0,0); render(); } else startCounter();
+}
+let counted=false;
+function startCounter(){
+  if(counted) return; counted=true;
+  const total=daysBetween("2026-09-23",new Date()); const el=$("#days");
+  const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  requestAnimationFrame(()=>{ $("#track").style.width="100%"; });
+  if(reduce){ el.textContent=total; return; }
+  const t0=performance.now(), dur=1600;
+  (function step(now){ const p=Math.min(1,(now-t0)/dur); el.textContent=Math.round(total*(1-Math.pow(1-p,3))); if(p<1) requestAnimationFrame(step); })(t0);
+}
+window.addEventListener("hashchange", route);
+route();
+})();
+</script>
+</body>
+</html>
