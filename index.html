@@ -125,6 +125,9 @@ section.block p.intro{color:var(--ink-2);font-size:20px;max-width:56ch;margin:0 
 .field input,.field select,.field textarea{min-height:52px;padding:12px 14px;border-radius:var(--radius-s);border:1.5px solid var(--line);background:var(--surface)}
 .field textarea{min-height:120px;resize:vertical}
 .field input:focus,.field select:focus,.field textarea:focus{border-color:var(--blue);outline:none;box-shadow:0 0 0 3px var(--mist)}
+.survey{display:grid;gap:16px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-m);padding:24px}
+.survey p{margin:0}
+.survey .note-s{font-size:16px;color:var(--ink-2);text-align:center}
 .ok{display:none;background:var(--green-soft);color:var(--green);padding:16px;border-radius:var(--radius-s);font-weight:700}
 
 footer.site{padding:40px 0 56px;border-top:1px solid var(--line);color:var(--ink-2);font-size:16px}
@@ -159,7 +162,7 @@ footer.site .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:
           <p class="lead">Tracte Digne guarda cada incidència, cada resposta i cada promesa de la residència. Perquè el teu familiar estigui ben atès, i perquè, quan calgui reclamar, tinguis les proves.</p>
           <div class="actions">
             <a class="btn" href="#app">Prova l’app</a>
-            <a class="btn ghost" href="#apunta-t">Vull ser-hi</a>
+            <a class="btn ghost" href="https://forms.gle/sc48ZjiA1UgB9bw67" target="_blank" rel="noopener">Vull ser-hi</a>
           </div>
         </div>
         <article class="promise" aria-label="Exemple de promeses pendents">
@@ -222,7 +225,7 @@ footer.site .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:
             <div class="price">5&nbsp;€<small> /mes</small></div>
             <p class="who">Fes-te soci vitalici i dona suport a la defensa dels residents, tinguis l’edat que tinguis.</p>
             <ul><li>Butlletí de l’associació</li><li>Si un dia ho necessites i portes 3 anys o més, la quota de soci et queda a la meitat</li></ul>
-            <a class="btn ghost" href="#apunta-t">Vull donar suport</a>
+            <a class="btn ghost" href="https://forms.gle/sc48ZjiA1UgB9bw67" target="_blank" rel="noopener">Vull donar suport</a>
           </div>
           <div class="plan main">
             <span class="best">La recomanada</span>
@@ -230,7 +233,7 @@ footer.site .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:
             <div class="price">15&nbsp;€<small> /mes</small></div>
             <p class="who">Per a famílies amb un resident</p>
             <ul><li>Incidències il·limitades</li><li>Historial i promeses amb avisos</li><li>Dossier de proves en PDF</li><li>Plantilles de reclamació</li><li>Grup de famílies de la residència</li><li>Advocats especialitzats a preu negociat. L’advocat es paga a part: ens el pagues a nosaltres, nosaltres ens n’encarreguem i no hi afegim res</li></ul>
-            <a class="btn" href="#apunta-t">Vull ser-hi</a>
+            <a class="btn" href="https://forms.gle/sc48ZjiA1UgB9bw67" target="_blank" rel="noopener">Vull ser-hi</a>
           </div>
         </div>
         <p class="plans-note"><b>Grups de famílies:</b> si més de 10 famílies d’una mateixa residència us feu socis junts, cada família paga 11&nbsp;€ al mes. <b>Socis vitalicis:</b> amb 3 anys o més, la quota de soci et queda a 7,50&nbsp;€ al mes.</p>
@@ -254,15 +257,13 @@ footer.site .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:
       <div class="wrap join">
         <div>
           <h2>El teu familiar, ben atès:</h2>
-          <p class="intro">Estem preparant el primer pilot amb famílies de residències del Vallès. Apunta-t’hi i et direm quan obrim a la teva residència.</p>
+          <p class="intro">Estem preparant el primer pilot amb famílies de residències del Vallès. Ajuda’ns a fer-ho bé.</p>
         </div>
-        <form id="joinForm" novalidate>
-          <div class="field"><label for="jn">Nom</label><input id="jn" name="nom" autocomplete="name" required></div>
-          <div class="field"><label for="je">Correu electrònic</label><input id="je" name="correu" type="email" autocomplete="email" required></div>
-          <div class="field"><label for="jr">Residència del teu familiar</label><input id="jr" name="residencia" placeholder="Nom i municipi"></div>
-          <button class="btn block" type="submit">Apunta’m</button>
-          <p class="ok" id="joinOk" role="status">T’hem apuntat. Et direm quan obrim a la teva residència.</p>
-        </form>
+        <div class="survey">
+          <p>Abans de començar, volem saber què en penses. Són 10 preguntes curtes, uns 4 minuts. Al final, si vols, ens deixes el correu i t’avisarem quan obrim.</p>
+          <a class="btn block" href="https://forms.gle/sc48ZjiA1UgB9bw67" target="_blank" rel="noopener">Respon l’enquesta</a>
+          <p class="note-s">S’obre a Google Forms. No cal posar el teu nom.</p>
+        </div>
       </div>
     </section>
   </main>
@@ -700,12 +701,6 @@ document.addEventListener("change", async e=>{
   $("#photoBox").innerHTML = draft.photo ? `<img src="${draft.photo}" alt="Foto seleccionada">` : "No s’ha pogut llegir la imatge. Prova amb una altra.";
 });
 document.addEventListener("submit", async e=>{
-  if(e.target.id==="joinForm"){
-    e.preventDefault(); const f=e.target; const email=f.correu.value.trim();
-    if(!f.nom.value.trim() || !/^\S+@\S+\.\S+$/.test(email)){ toast("Escriu el nom i un correu vàlid."); return; }
-    try{ const l=JSON.parse(localStorage.getItem(KEY+"-waitlist")||"[]"); l.push({nom:f.nom.value,correu:email,residencia:f.residencia.value,t:new Date().toISOString()}); localStorage.setItem(KEY+"-waitlist",JSON.stringify(l)); }catch(err){}
-    f.querySelectorAll("input,button").forEach(x=>x.disabled=true); $("#joinOk").style.display="block"; return;
-  }
   if(e.target.id!=="newForm") return;
   e.preventDefault();
   const title=$("#nt").value.trim(); let ok=true;
