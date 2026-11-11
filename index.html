@@ -94,8 +94,11 @@ section.block p.intro{color:var(--ink-2);font-size:20px;max-width:56ch;margin:0 
 .features dt{font-weight:700;font-size:20px;margin-bottom:4px}
 .features dd{margin:0;color:var(--ink-2)}
 
-.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-@media (max-width:900px){.plans{grid-template-columns:1fr}}
+.plans{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+@media (max-width:1000px){.plans{grid-template-columns:1fr 1fr}}
+@media (max-width:640px){.plans{grid-template-columns:1fr}}
+.plans-note{margin:24px 0 0;color:var(--ink-2);font-size:17px;max-width:70ch}
+.plans-note b{color:var(--ink)}
 .plan{border:1px solid var(--line);border-radius:var(--radius-m);padding:28px;background:var(--surface);display:flex;flex-direction:column}
 .plan.main{border:2px solid var(--blue)}
 .plan h3{margin:0;font-size:20px}
@@ -104,6 +107,8 @@ section.block p.intro{color:var(--ink-2);font-size:20px;max-width:56ch;margin:0 
 .plan .who{color:var(--ink-2);margin:0 0 18px;font-size:16px}
 .plan ul{margin:0 0 24px;padding-left:20px;flex:1}
 .plan li{margin-bottom:8px}
+.plan .extra{margin:-2px 0 6px;font-weight:700;font-size:16px;color:var(--blue)}
+.plan .btn{padding:0 16px;white-space:nowrap}
 
 .faq details{border-bottom:1px solid var(--line);padding:18px 0}
 .faq summary{cursor:pointer;font-weight:700;font-size:20px;list-style:none;display:flex;justify-content:space-between;gap:16px}
@@ -202,30 +207,39 @@ footer.site .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:
     <section class="block" id="preus">
       <div class="wrap">
         <h2>Preus:</h2>
-        <p class="intro">Menys de l’1&nbsp;% del que costa una plaça de residència.</p>
+        <p class="intro">Menys del que costa un dia de residència, al mes. Som una associació de famílies: les residències no hi paguen res.</p>
         <div class="plans">
           <div class="plan">
             <h3>Consulta</h3>
             <div class="price">0&nbsp;€</div>
             <p class="who">Per conèixer les residències</p>
-            <ul><li>Notes i fitxes de totes les residències</li><li>3 incidències al mes</li><li>Grup de famílies de la residència</li></ul>
+            <ul><li>Mapa de totes les residències de Catalunya</li><li>Nota de cada residència</li><li>Llegir i escriure ressenyes</li></ul>
+            <a class="btn ghost" href="residencies.html">Veure residències</a>
+          </div>
+          <div class="plan">
+            <h3>Soci vitalici</h3>
+            <div class="price">5&nbsp;€<small> /mes</small></div>
+            <p class="who">Per a qualsevol persona que vulgui participar</p>
+            <ul><li>Dones suport a la defensa dels residents</li><li>Butlletí de l’associació</li><li>Després de 3 anys, un 50&nbsp;% de descompte quan et facis soci</li></ul>
             <a class="btn ghost" href="#apunta-t">Vull ser-hi</a>
           </div>
           <div class="plan main">
-            <h3>Família</h3>
-            <div class="price">9,90&nbsp;€<small> /mes</small></div>
-            <p class="who">Per seguir el dia a dia</p>
-            <ul><li>Incidències il·limitades</li><li>Historial i promeses amb avisos</li><li>Dossier de proves en PDF</li><li>Plantilles de reclamació</li></ul>
+            <h3>Soci</h3>
+            <div class="price">15&nbsp;€<small> /mes</small></div>
+            <p class="who">Per a famílies amb un resident</p>
+            <ul><li>Incidències il·limitades</li><li>Historial i promeses amb avisos</li><li>Dossier de proves en PDF</li><li>Plantilles de reclamació</li><li>Grup de famílies de la residència</li></ul>
             <a class="btn" href="#apunta-t">Vull ser-hi</a>
           </div>
           <div class="plan">
-            <h3>Família + Jurídic</h3>
-            <div class="price">24,90&nbsp;€<small> /mes</small></div>
+            <h3>Soci + Advocats</h3>
+            <div class="price">15&nbsp;€<small> /mes</small></div>
+            <p class="extra">+ el preu de l’advocat</p>
             <p class="who">Quan cal anar més lluny</p>
-            <ul><li>Tot el pla Família</li><li>Consultes il·limitades amb advocat</li><li>4 escrits revisats a l’any</li><li>Gestió de queixes a la Inspecció i al Síndic</li></ul>
+            <ul><li>Tot el que inclou Soci</li><li>Advocats de dret social i sanitari</li><li>Preus negociats per l’associació</li><li>Pagues el preu de l’advocat, sense cap recàrrec</li></ul>
             <a class="btn ghost" href="#apunta-t">Vull ser-hi</a>
           </div>
         </div>
+        <p class="plans-note"><b>Grups de famílies:</b> si més de 10 famílies d’una mateixa residència us feu socis junts, cada família paga 11&nbsp;€ al mes. <b>Socis vitalicis:</b> amb 3 anys o més de soci vitalici, la quota de soci et queda a 7,50&nbsp;€ al mes.</p>
       </div>
     </section>
 
@@ -236,6 +250,8 @@ footer.site .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:
         <details><summary>La residència sabrà que faig servir l’app?</summary><p>Només quan tu decideixis comunicar-li una incidència. Llavors rep un avís formal amb la data, com si fos un escrit registrat.</p></details>
         <details><summary>Qui pot veure les meves incidències?</summary><p>Només tu, els familiars que autoritzis i, si ho demanes, el gestor o l’advocat assignat. A la nota pública només hi surten dades agregades i anònimes.</p></details>
         <details><summary>Hi surten noms de treballadors?</summary><p>No. La nota parla de la residència, mai de persones concretes. El que volem és que el servei millori, no assenyalar ningú.</p></details>
+        <details><summary>Per què l’advocat es paga a part?</summary><p>Perquè sàpigues exactament què pagues. L’associació negocia preus tancats amb advocats especialitzats. Tu pagues només el preu de l’advocat, sense cap recàrrec, i l’advocat et factura directament.</p></details>
+        <details><summary>Què és el soci vitalici?</summary><p>Una quota de 5&nbsp;€ al mes per a qualsevol persona, de qualsevol edat, que vulgui donar suport a la defensa dels residents. Si un dia tens un familiar en una residència i ja portes 3 anys o més com a soci vitalici, la quota de soci et queda a la meitat.</p></details>
         <details><summary>Les proves són meves?</summary><p>Sí. Pots descarregar-te el dossier complet quan vulguis, i esborrar el compte i les dades en qualsevol moment.</p></details>
       </div>
     </section>
@@ -581,8 +597,8 @@ function viewProfile(){
   $("#view").innerHTML = `
     <div class="resident"><div class="avatar">JP</div><div><b>${esc(USER.full)}</b><span>${esc(USER.relation)} de ${esc(RESIDENT.name)}</span></div></div>
     <ul class="menu">
-      <li><button data-action="lawyer">Parlar amb un advocat <small>Inclòs al teu pla</small></button></li>
-      <li><button data-action="plan">El meu pla <small>Família + Jurídic</small></button></li>
+      <li><button data-action="lawyer">Parlar amb un advocat <small>A preu negociat</small></button></li>
+      <li><button data-action="plan">El meu pla <small>Soci + Advocats</small></button></li>
       <li><button data-action="family">Familiars autoritzats <small>Anna Puig</small></button></li>
       <li><button data-action="export">Descarregar totes les meves dades</button></li>
     </ul>
@@ -671,9 +687,9 @@ document.addEventListener("click", async ev=>{
     case "copy": try{ await navigator.clipboard.writeText($("#complaint").textContent); toast("Text copiat"); }catch(e){ toast("Selecciona el text i copia’l manualment."); } break;
     case "markEscalated": i.status="escalada"; i.events.push({t:now,k:"Queixa enviada a la Inspecció",d:"Escalada per la família"}); save(); closeModal(); render(); toast("Queixa marcada com a enviada"); break;
     case "dossier": dossierWindow(i); break;
-    case "lawyer": modal(`<h2 id="modalTitle">Parlar amb un advocat:</h2><p>Explica breument el cas. Un advocat especialitzat et respondrà en 48 hores.</p><div class="field"><textarea id="lawTxt" placeholder="Què ha passat i què voldries aconseguir"></textarea><p class="err" id="errLaw"></p></div><div class="stack"><button class="btn" data-action="lawSend">Enviar consulta</button><button class="btn ghost" data-action="close">Cancel·lar</button></div>`); break;
+    case "lawyer": modal(`<h2 id="modalTitle">Parlar amb un advocat:</h2><p>Explica breument el cas. Un advocat especialitzat et respondrà en 48 hores amb el preu tancat abans de començar.</p><div class="field"><textarea id="lawTxt" placeholder="Què ha passat i què voldries aconseguir"></textarea><p class="err" id="errLaw"></p></div><div class="stack"><button class="btn" data-action="lawSend">Enviar consulta</button><button class="btn ghost" data-action="close">Cancel·lar</button></div>`); break;
     case "lawSend": if(!$("#lawTxt").value.trim()){ $("#errLaw").textContent="Explica el cas abans d’enviar la consulta."; return; } closeModal(); toast("Consulta enviada. Et respondrem en 48 hores."); break;
-    case "plan": toast("Pla Família + Jurídic: 24,90 € al mes"); break;
+    case "plan": toast("Soci + Advocats: 15 € al mes, més el preu de l’advocat"); break;
     case "family": toast("Anna Puig pot veure i afegir incidències"); break;
     case "export": { const blob=new Blob([JSON.stringify(state,null,2)],{type:"application/json"}); const u=URL.createObjectURL(blob); const l=document.createElement("a"); l.href=u; l.download="tractedigne-dades.json"; l.click(); URL.revokeObjectURL(u); toast("Dades descarregades"); break; }
     case "reset": state=seed(); save(); go("inici"); toast("Dades d’exemple restablertes"); break;
