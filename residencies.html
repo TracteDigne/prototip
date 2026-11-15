@@ -63,6 +63,11 @@ button,input,select,textarea{font:inherit;color:inherit}
 
 .filters{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:12px;padding-bottom:20px}
 @media (max-width:900px){.filters{grid-template-columns:1fr 1fr}.filters .q{grid-column:1/-1}}
+.morefilters{display:none}
+@media (max-width:600px){
+  .morefilters{display:inline-flex;grid-column:1/-1;justify-self:start}
+  .filters:not(.open) .field:not(.q){display:none}
+}
 .field{display:flex;flex-direction:column;gap:6px}
 .field label,.field .lbl{font-weight:700;font-size:16px}
 .field input,.field select,.field textarea{min-height:52px;padding:12px 14px;border-radius:var(--radius-s);border:1.5px solid var(--line);background:var(--surface);width:100%}
@@ -203,6 +208,7 @@ footer.site p{margin:0 0 8px;max-width:90ch}
   <div class="wrap">
     <form class="filters" role="search" onsubmit="return false">
       <div class="field q"><label for="q">Busca per nom o municipi</label><input id="q" type="search" placeholder="Per exemple: Granollers" autocomplete="off"></div>
+      <button type="button" class="btn ghost small morefilters" id="moreFilters" aria-expanded="false" aria-controls="fCom fTit fOrd">Filtres i ordre</button>
       <div class="field"><label for="fCom">Comarca</label><select id="fCom"><option value="">Totes</option></select></div>
       <div class="field"><label for="fTit">Titularitat</label><select id="fTit"><option value="">Totes</option><option value="p">Pública</option><option value="s">Privada d’iniciativa social</option><option value="m">Privada mercantil</option></select></div>
       <div class="field"><label for="fOrd">Ordena per</label><select id="fOrd"><option value="nom">Nom</option><option value="nota">Millor valorades</option><option value="ress">Més ressenyes</option><option value="places">Més places</option></select></div>
@@ -414,6 +420,13 @@ function reviewHTML(x){
     ${own?`<button type="button" class="btn small ghost" style="margin-top:10px" data-del="${esc(x.id)}">Esborrar la meva ressenya</button>`:""}
   </li>`;
 }
+
+/* ---------- Filtres plegats al mòbil ---------- */
+$("#moreFilters").addEventListener("click", e => {
+  const open = e.currentTarget.closest("form").classList.toggle("open");
+  e.currentTarget.setAttribute("aria-expanded", open);
+  e.currentTarget.textContent = open ? "Amaga els filtres" : "Filtres i ordre";
+});
 
 /* ---------- Registre ---------- */
 function renderUser(){ $("#userBtn").textContent = user ? user.name : "Entra"; }

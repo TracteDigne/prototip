@@ -444,7 +444,7 @@ footer.site .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:
 <script>
 (function(){
 "use strict";
-const KEY = "tractedigne-demo-v2";
+const KEY = "tractedigne-demo-v3";
 const $ = (s, r=document) => r.querySelector(s);
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const DAY = 86400000;
@@ -467,21 +467,24 @@ const STEPS = [
 ];
 const CATS = ["Medicació","Tracte","Higiene","Alimentació","Temperatura","Manteniment","Bugaderia","Robatori","Altres"];
 
+/* Les dates de l’exemple es calculen a partir d’avui, perquè l’exemple no caduqui */
+function ago(days, time){ const d=new Date(Date.now()-days*DAY); const p=n=>String(n).padStart(2,"0");
+  const day=`${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}`; return time ? `${day}T${time}:00` : day; }
 function seed(){
   return {
     incidents:[
-      {id:"i1",cat:"Medicació",sev:"alta",title:"No li han donat la medicació de la nit",desc:"A les 21:40 la pastilla de la pressió encara era al pastiller. La infermera de torn no ho sabia.",date:"2026-11-08T21:40:00",status:"resposta",level:1,photo:null,hash:"9f2c4e81a7d03b56c1e8f94a2d7b60e3c5a19f8d2e47b0c6a3d9e1f5b7c2a840",
-       events:[{t:"2026-11-08T21:52:00",k:"Registrada",d:"Amb una foto del pastiller"},{t:"2026-11-08T21:53:00",k:"Comunicada a la residència",d:"Avís formal enviat per correu a la residència"},{t:"2026-11-09T10:12:00",k:"Resposta de la residència",via:"correu",d:"Hem revisat el cas amb l’equip d’infermeria. Canviarem el sistema de pastillers de la nit i ho tindrem resolt en 20 dies.",due:"2026-11-29"}]},
-      {id:"i2",cat:"Tracte",sev:"alta",title:"25 minuts per respondre el timbre",desc:"Va trucar perquè necessitava anar al lavabo i ningú no va venir fins al cap de 25 minuts.",date:"2026-11-02T03:10:00",status:"resposta",level:1,photo:null,hash:"4b7e1d90c3a2f85e6d1b47c09a3e2f81d5c6b7a49e0f3d2c1b8a7e6f5d4c3b2a",
-       events:[{t:"2026-11-02T09:15:00",k:"Registrada",d:"Explicat per la mateixa resident"},{t:"2026-11-02T09:16:00",k:"Comunicada a la residència",d:"Avís formal enviat per correu a la residència"},{t:"2026-11-02T17:40:00",k:"Resposta de la residència",via:"correu",d:"Aquella nit hi havia una baixa sense cobrir. Reforçarem el torn de nit a partir de dilluns.",due:"2026-11-09"}]},
-      {id:"i3",cat:"Bugaderia",sev:"baixa",title:"Roba d’una altra persona a l’armari",desc:"Tres peces que no són seves, i en falten dues de pròpies.",date:"2026-11-05T11:00:00",status:"oberta",level:1,photo:null,hash:"c1d2e3f4a5b6978877665544332211ffeeddccbbaa99887766554433221100aa",
-       events:[{t:"2026-11-05T11:05:00",k:"Registrada",d:""},{t:"2026-11-05T11:06:00",k:"Comunicada a la residència",d:"Avís formal enviat per correu a la residència"}]},
-      {id:"i4",cat:"Temperatura",sev:"mitjana",title:"30 °C a l’habitació",desc:"L’aire condicionat de la planta 3 no funciona des de fa una setmana.",date:"2026-08-14T16:20:00",status:"resolta",level:1,photo:null,hash:"7a6b5c4d3e2f1a0b9c8d7e6f5a4b3c2d1e0f9a8b7c6d5e4f3a2b1c0d9e8f7a6b",
-       events:[{t:"2026-08-14T16:25:00",k:"Registrada",d:"Amb una foto del termòmetre"},{t:"2026-08-14T16:26:00",k:"Comunicada a la residència",d:"Avís formal enviat per correu a la residència"},{t:"2026-08-16T10:00:00",k:"Resposta de la residència",via:"correu",d:"No trobem tècnics disponibles. Ho estem gestionant."},{t:"2026-09-02T12:00:00",k:"Resolta",d:"L’aire condicionat torna a funcionar."}]}
+      {id:"i1",cat:"Medicació",sev:"alta",title:"No li han donat la medicació de la nit",desc:"A les 21:40 la pastilla de la pressió encara era al pastiller. La infermera de torn no ho sabia.",date:ago(7,"21:40"),status:"resposta",level:1,photo:null,hash:"9f2c4e81a7d03b56c1e8f94a2d7b60e3c5a19f8d2e47b0c6a3d9e1f5b7c2a840",
+       events:[{t:ago(7,"21:52"),k:"Registrada",d:"Amb una foto del pastiller"},{t:ago(7,"21:53"),k:"Comunicada a la residència",d:"Avís formal enviat per correu a la residència"},{t:ago(6,"10:12"),k:"Resposta de la residència",via:"correu",d:"Hem revisat el cas amb l’equip d’infermeria. Canviarem el sistema de pastillers de la nit i ho tindrem resolt en 20 dies.",due:ago(-14)}]},
+      {id:"i2",cat:"Tracte",sev:"alta",title:"25 minuts per respondre el timbre",desc:"Va trucar perquè necessitava anar al lavabo i ningú no va venir fins al cap de 25 minuts.",date:ago(13,"03:10"),status:"resposta",level:1,photo:null,hash:"4b7e1d90c3a2f85e6d1b47c09a3e2f81d5c6b7a49e0f3d2c1b8a7e6f5d4c3b2a",
+       events:[{t:ago(13,"09:15"),k:"Registrada",d:"Explicat per la mateixa resident"},{t:ago(13,"09:16"),k:"Comunicada a la residència",d:"Avís formal enviat per correu a la residència"},{t:ago(13,"17:40"),k:"Resposta de la residència",via:"correu",d:"Aquella nit hi havia una baixa sense cobrir. Reforçarem el torn de nit a partir de dilluns.",due:ago(6)}]},
+      {id:"i3",cat:"Bugaderia",sev:"baixa",title:"Roba d’una altra persona a l’armari",desc:"Tres peces que no són seves, i en falten dues de pròpies.",date:ago(10,"11:00"),status:"oberta",level:1,photo:null,hash:"c1d2e3f4a5b6978877665544332211ffeeddccbbaa99887766554433221100aa",
+       events:[{t:ago(10,"11:05"),k:"Registrada",d:""},{t:ago(10,"11:06"),k:"Comunicada a la residència",d:"Avís formal enviat per correu a la residència"}]},
+      {id:"i4",cat:"Temperatura",sev:"mitjana",title:"30 °C a l’habitació",desc:"L’aire condicionat de la planta 3 no funciona des de fa una setmana.",date:ago(93,"16:20"),status:"resolta",level:1,photo:null,hash:"7a6b5c4d3e2f1a0b9c8d7e6f5a4b3c2d1e0f9a8b7c6d5e4f3a2b1c0d9e8f7a6b",
+       events:[{t:ago(93,"16:25"),k:"Registrada",d:"Amb una foto del termòmetre"},{t:ago(93,"16:26"),k:"Comunicada a la residència",d:"Avís formal enviat per correu a la residència"},{t:ago(91,"10:00"),k:"Resposta de la residència",via:"correu",d:"No trobem tècnics disponibles. Ho estem gestionant."},{t:ago(74,"12:00"),k:"Resolta",d:"L’aire condicionat torna a funcionar."}]}
     ],
     commitments:[
       {id:"c1",title:"Instal·lar càmeres als passadissos",promised:"2025-03-12",due:null,done:null},
-      {id:"c2",title:"Safates específiques per a dietes especials",promised:"2026-09-23",due:"2026-12-31",done:null},
+      {id:"c2",title:"Safates específiques per a dietes especials",promised:"2026-09-23",due:ago(-46),done:null},
       {id:"c3",title:"Una hora de manteniment setmanal per planta",promised:"2026-09-23",due:"2026-10-31",done:"2026-10-15"}
     ]
   };
