@@ -50,7 +50,16 @@ button,input,select,textarea{font:inherit;color:inherit}
 .topnav{display:flex;align-items:center;gap:22px}
 .topnav a.link{color:var(--ink-2);text-decoration:none;font-size:16px}
 .topnav a.link:hover{color:var(--ink)}
-@media (max-width:760px){.topnav a.link{display:none}}
+@media (max-width:760px){
+  .topbar .wrap{height:auto;min-height:68px;flex-wrap:wrap;row-gap:0;padding-top:8px}
+  .topnav{display:contents}
+  .topnav>.btn{order:2}
+  .topnav .links{order:3;flex-basis:100%;display:flex;justify-content:space-between;gap:6px 16px;flex-wrap:wrap;padding:4px 0 8px}
+  .topnav a.link{display:inline-flex;align-items:center;min-height:44px;font-size:16px}
+}
+@media (min-width:761px){.topnav .links{display:contents}}
+@media (max-width:380px){.topnav .links{gap:4px 8px}.topnav a.link{font-size:15px}.brand{font-size:18px;gap:8px}.topnav>.btn{padding:0 14px}}
+@media (max-width:350px){.topnav .links{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}}
 
 .hero{padding:72px 0 56px}
 .hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:center}
@@ -145,10 +154,12 @@ footer.site .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:
         Tracte Digne
       </a>
       <nav class="topnav" aria-label="Seccions">
-        <a class="link" href="residencies.html">Residències</a>
+        <span class="links">
+<a class="link" href="residencies.html">Residències</a>
         <a class="link" href="#com-funciona">Com funciona</a>
         <a class="link" href="#preus">Preus</a>
         <a class="link" href="#preguntes">Preguntes</a>
+        </span>
         <a class="btn small" href="#app">Prova l’app</a>
       </nav>
     </div>

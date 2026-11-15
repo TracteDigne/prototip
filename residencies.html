@@ -55,7 +55,15 @@ button,input,select,textarea{font:inherit;color:inherit}
 .topnav a.link{color:var(--ink-2);text-decoration:none;font-size:16px}
 .topnav a.link:hover,.topnav a.link[aria-current="page"]{color:var(--ink)}
 .topnav a.link[aria-current="page"]{font-weight:700}
-@media (max-width:760px){.topnav a.link{display:none}}
+@media (max-width:760px){
+  .topbar .wrap{height:auto;min-height:68px;flex-wrap:wrap;row-gap:0;padding-top:8px}
+  .topnav{display:contents}
+  .topnav>.btn{order:2}
+  .topnav .links{order:3;flex-basis:100%;display:flex;justify-content:flex-start;gap:6px 24px;flex-wrap:wrap;padding:4px 0 8px}
+  .topnav a.link{display:inline-flex;align-items:center;min-height:44px;font-size:16px}
+}
+@media (min-width:761px){.topnav .links{display:contents}}
+@media (max-width:380px){.topnav .links{gap:4px 8px}.topnav a.link{font-size:15px}.brand{font-size:18px;gap:8px}.topnav>.btn{padding:0 14px}}
 
 .intro{padding:40px 0 24px}
 .intro h1{font-size:clamp(34px,5vw,56px);line-height:1.05;letter-spacing:-.02em;margin:0 0 12px}
@@ -190,8 +198,10 @@ footer.site p{margin:0 0 8px;max-width:90ch}
       Tracte Digne
     </a>
     <nav class="topnav" aria-label="Seccions">
-      <a class="link" href="index.html">Inici</a>
+      <span class="links">
+<a class="link" href="index.html">Inici</a>
       <a class="link" href="residencies.html" aria-current="page">Residències</a>
+        </span>
       <button class="btn small ghost" type="button" id="userBtn">Entra</button>
     </nav>
   </div>
