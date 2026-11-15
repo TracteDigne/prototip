@@ -386,6 +386,9 @@ footer.site .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:
 .facts{margin:0;display:grid;grid-template-columns:auto 1fr;gap:8px 16px;font-size:16px}
 .facts dt{color:var(--ink-2)}
 .facts dd{margin:0;font-weight:700}
+.sources{margin:0;font-size:16px}
+.sources dt{font-weight:700}
+.sources dd{margin:2px 0 12px;color:var(--ink-2)}
 .note{font-size:14px;color:var(--ink-2);margin:12px 0 0}
 
 .menu{list-style:none;margin:0;padding:0;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-m);overflow:hidden}
@@ -448,7 +451,7 @@ const daysBetween = (a,b) => Math.floor((new Date(b) - new Date(a)) / DAY);
 /* ---------- Dades d’exemple ---------- */
 const RESIDENT = {name:"Montserrat Puig", initials:"MP", where:"Planta 3, habitació 312"};
 const USER = {name:"Jordi", full:"Jordi Puig", relation:"Fill"};
-const RESIDENCE = {name:"Residència Els Til·lers", town:"Vallès Oriental", places:120, owner:"Iniciativa social (fundació)", concert:"Sí, 64 places", families:38,
+const RESIDENCE = {name:"Residència Els Til·lers", town:"Vallès Oriental", address:"Carrer inventat, 12", places:120, owner:"Iniciativa social (fundació)", concert:"Sí, 64 places", families:38,
   factors:[["Incidències per cada 100 places",5.2,35],["Resolució dins de termini",6.8,25],["No reincidència",5.5,15],["Satisfacció de les famílies",6.4,15],["Dades oficials",7.0,10]]};
 const SEV = {alta:{label:"Alta",hours:24,txt:"24 hores"}, mitjana:{label:"Mitjana",hours:72,txt:"72 hores"}, baixa:{label:"Baixa",hours:360,txt:"15 dies"}};
 const STEPS = [
@@ -621,7 +624,9 @@ function viewResidence(){
     <h3 class="h3">Promeses de la Direcció</h3>
     <ul class="list">${state.commitments.map(c=>{const s=commitStatus(c);return `<li><div class="item" style="cursor:default"><span class="dot ${s.dot}"></span><span class="txt"><span class="t">${esc(c.title)}</span><span class="m">Promès el ${fmtDate(c.promised)}. ${s.line}.</span></span><span class="pill ${s.pill}">${s.label}</span></div></li>`}).join("")}</ul>
     <h3 class="h3">Dades oficials</h3>
-    <dl class="facts"><dt>Places</dt><dd>${RESIDENCE.places}</dd><dt>Titularitat</dt><dd>${esc(RESIDENCE.owner)}</dd><dt>Places concertades</dt><dd>${esc(RESIDENCE.concert)}</dd></dl>
+    <dl class="facts"><dt>Adreça</dt><dd>${esc(RESIDENCE.address)}</dd><dt>Places</dt><dd>${RESIDENCE.places}</dd><dt>Titularitat</dt><dd>${esc(RESIDENCE.owner)}</dd><dt>Places concertades</dt><dd>${esc(RESIDENCE.concert)}</dd></dl>
+    <h3 class="h3">D’on surten aquestes dades:</h3>
+    <dl class="sources"><dt>Nom, adreça, places i titularitat</dt><dd>Registre d’entitats, serveis i establiments socials de la Generalitat de Catalunya (dades obertes)</dd><dt>Ubicació al mapa</dt><dd>Institut Cartogràfic i Geològic de Catalunya, a partir de l’adreça</dd><dt>Nota i promeses</dt><dd>Incidències verificades de les famílies de Tracte Digne</dd></dl>
     <p class="note">Residència d’exemple. La nota es calcula amb incidències verificades, el temps de resolució i dades oficials. La residència té dret de rèplica.</p>`;
 }
 
